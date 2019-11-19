@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Crate.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/KinematicBody.gd" type="Script" id=2]
+[ext_resource path="res://Assets/weaponpack_assets/Models/shotgun.obj" type="ArrayMesh" id=3]
 
 [sub_resource type="SpatialMaterial" id=1]
 albedo_color = Color( 0.286275, 0.313726, 0.341176, 1 )
@@ -12,12 +14,19 @@ size = Vector2( 20, 20 )
 [sub_resource type="ConvexPolygonShape" id=3]
 points = PoolVector3Array( 10, 0, 10, -10, 0, 10, 10, 0, -10, -10, 0, -10 )
 
+[sub_resource type="CapsuleShape" id=4]
+radius = 0.500862
+height = 1.00264
+
+[sub_resource type="BoxShape" id=5]
+extents = Vector3( 0.4, 0.1, 0.4 )
+
 [node name="World" type="Spatial"]
 
 [node name="Ground" type="StaticBody" parent="."]
 
 [node name="MeshInstance" type="MeshInstance" parent="Ground"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0944796, 0.0631865, 0.0122795 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0944796, 0.0589797, 0.0122795 )
 mesh = SubResource( 2 )
 material/0 = null
 
@@ -33,10 +42,62 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.54735, 2.63189, 0.0999665 )
 [node name="Crate3" parent="." instance=ExtResource( 1 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -4.56277, 0.647794, 0.439583 )
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.456703, 0, 0.889619, 0, 1, 0, -0.889619, 0, 0.456703, 0, 1.54009, 0 )
-
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 0.939326, 0.165016, 0.300728, -0.320125, 0.736663, 0.595691, -0.123237, -0.655818, 0.744792, 0, 4.22297, 0 )
 shadow_enabled = true
 shadow_color = Color( 0.129412, 0.145098, 0.160784, 1 )
+
+[node name="KinematicBody" type="KinematicBody" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.313689, 0 )
+script = ExtResource( 2 )
+
+[node name="Body" type="CollisionShape" parent="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 1.19778, 0 )
+shape = SubResource( 4 )
+
+[node name="Feet" type="CollisionShape" parent="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.282476, 0 )
+shape = SubResource( 5 )
+
+[node name="Pivot" type="Spatial" parent="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25662, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="KinematicBody/Pivot"]
+transform = Transform( 0.248485, 0, -0.968636, 0.00332578, 0.999994, 0.000853168, 0.96863, -0.00343347, 0.248484, -0.526157, 0, -0.173077 )
+mesh = ExtResource( 3 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+material/4 = null
+material/5 = null
+material/6 = null
+material/7 = null
+material/8 = null
+material/9 = null
+material/10 = null
+material/11 = null
+material/12 = null
+material/13 = null
+material/14 = null
+material/15 = null
+material/16 = null
+material/17 = null
+material/18 = null
+material/19 = null
+material/20 = null
+material/21 = null
+material/22 = null
+material/23 = null
+material/24 = null
+material/25 = null
+material/26 = null
+material/27 = null
+material/28 = null
+material/29 = null
+material/30 = null
+material/31 = null
+material/32 = null
+
+[node name="Camera" type="Camera" parent="KinematicBody/Pivot"]
+transform = Transform( 0.0619561, 0, 0.998079, 0, 1, 0, -0.998079, 0, 0.0619561, 0, 0.149401, 0 )
